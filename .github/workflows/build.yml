@@ -1,0 +1,18 @@
+name: Build H4 Optimizer EXE
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install psutil pyinstaller
+      - run: pyinstaller --onefile --noconsole --uac-admin --icon icon.ico --name H4Optimizer H4Optimizer.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: H4Optimizer-EXE
+          path: dist/H4Optimizer.exe
